@@ -1,12 +1,19 @@
-var express = require('express')
-    ,app = express()
-    ,bodyParser = require('body-parser')
-    ,routes = require('../app/routes');
+var express = require('express');
+var consign = require('consign');
+var bodyParser = require('body-parser');
+var app = express();
 
+//CONFIGURACOES DO EXPRESS
+app.set('secret', "COCACOLASEMGAS");
 app.use(express.static('./public'));
-app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json());
-
-routes(app);
+consign({
+        cwd : 'app'
+    })
+    .include('model')
+    .then('controller')
+    .then('route/auth.js')
+    .then('route')
+    .into(app);
 
 module.exports = app;

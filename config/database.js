@@ -1,13 +1,20 @@
-var Datastore = require('nedb')
-    ,dbName = 'data.db'
-    ,db;
+var mongoose = require('mongoose');
 
-if(!db) {
-    db = new Datastore({
-        filename: dbName, 
-        autoload: true 
+module.exports = (uri, database) => {
+    mongoose.connect("mongodb://" + uri + "/" + database);
+    mongoose.connection.on('connected', ()=> {
+        console.log('DB ready!')
     });
-    console.log('Banco ' + dbName + ' pronto para uso')
+    mongoose.connection.on('error', (error)=> {
+        console.log('DB error:' + error)
+    });
+    mongoose.connection.on('disconnected', (error)=> {
+        console.log('DB down!')
+    });
+    process.on('SIGINT', () => {
+        mongoose.connection.close(() => {
+            console.log('DB down: APP closed');
+            process.exit(0);
+        });
+    });       
 }
-
-module.exports = db;

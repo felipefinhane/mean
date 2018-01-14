@@ -1,0 +1,13 @@
+<h1 class="text-center">Login</h1>
+<p class="alert-danger">{{menssage}}</p>
+<form ng-submit="auth()">
+    <div class="form-group">
+        <label for="login">Login</label>
+        <input type="text" class="form-control" id="login" ng-model="user.login">
+    </div>
+    <div class="form-group">
+        <label for="password">Password</label>
+        <input type="password" class="form-control" id="password"  ng-model="user.password">
+    </div>
+    <input type="submit" value="Login" class="btn btn-primary">
+</form>

@@ -14,6 +14,9 @@ consign({
     .then('controller')
     .then('route/auth.js')
     .then('route')
+    .then('v1/model')
+    .then('v1/controller')
+    .then('v1/route')
     .into(app);
 
 module.exports = app;
